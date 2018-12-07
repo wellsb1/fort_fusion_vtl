@@ -269,7 +269,7 @@ The "save" directive is used for saving the output of any Velocity code to a var
 any Velocity code is valid inside of the tag.  This is useful for constructing complex SQL.
 
 ```
-\#save('repeat')
+#save('repeat')
   Hello World
 #end
 
@@ -294,9 +294,11 @@ $content variable. This is useful for sub layout routines.
 
 ```
 #layout('some_sub_layout_file.vm')
- this content will be passed to 'some_sub_layout_file.vm' as $content
- and the rendering of 'some_sub_layout_file.vm' will included inline.
-#
+
+	this content will be passed to 'some_sub_layout_file.vm' as $content
+	and the rendering of 'some_sub_layout_file.vm' will included inline.
+
+#end
 
 ```
 
