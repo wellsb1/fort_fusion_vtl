@@ -7,9 +7,9 @@ I originally built this framework circa 2005 when I needed a JSP alternative to 
 web UI customizations.  VTL was clean, simple and fit my purpose but I thought it needed a few "organizing principles" to make
 it a little more scalable from a development perspective.
 
-Throwing it back to the early 2000's I met a bunch of guys involved in the "Fusebox" ColdFusion framework development community.  
-They had created what I considered to be a simple but useful convention for organizing template centric web apps.  
-I loosely adopted their high level patterns with a few tweaks and FusionVTL is the result.  
+Throwing it back to the early 2000's I met a bunch of guys involved in the "Fusebox" ColdFusion framework 
+development community.  They had created what I considered to be a simple but useful convention for organizing template 
+centric web apps.  I loosely adopted their high level patterns with a few tweaks and FusionVTL is the result.  
 
 I have used this framework often over the years when I needed super simple web templating.  It turned out to 
 really shine at creating complex SQL from user supplied values for custom report web UIs.  
@@ -26,27 +26,28 @@ and I had to smile since what was old seemed to be new again.
 
 ## Contents
 
-[What is FusionVTL](#what-is-fusionvtl)
-[What it Does](#what-it-does)	
-[Important VelocityView Servlet Configuration Files](#important-velocityview-servlet-configuration-files)
-[FusionVTL Optional Framework Files](#fusionvtl-optional-framework-files)
-[URL Mapping](#url-mapping)
-[Request Lifecycle](#request-lifecycle)
-[Pre Page Setup - settings.vm](#pre-page-setup-settings-vm)
-[Post Page Layout - layout.vm](#post-page-layout-layout-vm)
-[Variables](#variables)
-[Filter vs Servlet ](#filter-vs-servlet)
-[FusionVTL Built in Directives](#fusionvtl-build-in-directives)
-[Switch](#switch)
-[Save](#save)
-[layout](#layout)
+ * [What is FusionVTL](#what-is-fusionvtl)
+ * [What it Does](#what-it-does)	
+ * [Important VelocityView Servlet Configuration Files](#important-velocityview-servlet-configuration-files)
+ * [FusionVTL Optional Framework Files](#fusionvtl-optional-framework-files)
+ * [URL Mapping](#url-mapping)
+ * [Request Lifecycle](#request-lifecycle)
+   * [Pre Page Setup - settings.vm](#pre-page-setup-settings-vm)
+   * [Post Page Layout - layout.vm](#post-page-layout-layout-vm)
+ * [Variables](#variables)
+ * [Filter vs Servlet ](#filter-vs-servlet)
+ * [FusionVTL Built in Directives](#fusionvtl-build-in-directives)
+   * [Switch](#switch)
+   * [Save](#save)
+   * [layout](#layout)
+ * [Dev Mode](#devmode)  
 
 
 	
 ## What is FusionVTL
 
 FusionVTL is a servlet framework that extends the excellent [VelocityViewServlet](http://velocity.apache.org/tools/devel/view.servlet.html)
-with a few standard conventions and extra directives.  	
+with a few standard conventions and [extra directives](#fusionvtl-build-in-directives).  	
 		
 You may want to brush up on the following before trying to understand what FusionVTL does vs. what Velocity offers natively and what 
 [VelocityView](http://velocity.apache.org/tools/devel/view.html) offers on top of that.
@@ -72,7 +73,7 @@ At its most basic level FusionVTL does three things:
  * WEB-INF/tools.xml - OPTIONAL - file that configures java bean helper classes that will be placed in Velocity page context on each
    request. This is where you put the the beans that will allow you to connect to your application business logic as well 
    as misc UI layer helpers.
- * WEB-INF/VM_global_library.vm - VM file loaded once by the framework that contains helpful macro definitions. Define useful
+ * WEB-INF/VM_global_library.vm - OPTIONAL - VM file loaded once by the framework that contains helpful macro definitions. Define useful
    velocity "subroutines" here and they will be in scope on each request. See [Velocimacro doco]http://velocity.apache.org/engine/2.0/vtl-reference.html) 
    for more info.
 
@@ -81,8 +82,8 @@ At its most basic level FusionVTL does three things:
  * WEB-INF/server.vm - OPTIONAL - this file is run once on servlet container initialization unless "devMode" is set. In which 
    case it will execute on every request
  * WEB-INF/settings.vm - OPTIONAL - a file that will be run at the very beginning of each request
- * /404.vm - Optional file used to customize 404 error messages
- * /500.vm - Optional file used to customize 500 error messages
+ * /404.vm - OPTIONAL - Template used to customize 404 error messages
+ * /500.vm - OPTIONAL - Template file used to customize 500 error messages
 
 
 ## URL Mapping
@@ -92,9 +93,11 @@ Left to its own device, VelocityView renders VM files wherever they are found on
 This can cause chaos without simple patters to follow. FusionVTL interprets a URL as the following:
 
 
-```{http://example.org/[servlet_context]}/${component}/[${action}]/[{[name]/[value]/...[name]/[value]}]?[standard query string]```
+```
+{http://example.org/[servlet_context]}/${component}/[${action}]/[{[name]/[value]/...[name]/[value]}]?[standard query string]
+```
 
- * {http://example.org/[servlet_context]} - The first grouping is the host, port, and servlet context. This URL is stored in the 
+ * {htt&#58;://example.org/[servlet_context]} - The first grouping is the host, port, and servlet context. This URL is stored in the 
    variable "${home}" for use in any .vm macro
  
  * ${component} - maps the URL to the first web root directory (by DFS search) with the corresponding name. This essentially allows
@@ -117,13 +120,13 @@ So, at this point, all FusionVTL has done is give you a simple way to index dire
 
 Examples:
 
-http://www.example.com/book/ - Might map to:
+htt&#58;://www.example.com/book/ - Might map to:
  * wwwroot/book/index.vm OR
  * wwwroot/book/switch.vm OR
  * wwwroot/library/random_sub_dir/book/switch.vm OR
 
 
-http://www.example.com/book/list - Might map to:
+htt&#58;://www.example.com/book/list - Might map to:
  * wwwroot/book/list.vm OR
  * wwwroot/library/book/list.vm OR
  * wwwroot/library/book/switch.vm OR
@@ -227,9 +230,9 @@ In filter mode, if FusionVTL can locate a .vm file as expected, it will execute 
 then layouts) and then exit. It will not forward the filter chain on. If a .vm file is not found, then filter chain is allowed to run
 normally. Using this technique you may have something like the following:
 
- * http://www.example.com/FusionVTL/book/list - "FusionVTL" is the servlet mapping trigger. In this came "$home" would be "http://www.example.com/FusionVTL" OR
- * http://www.example.com/book/list - is picked up and handled by FusionVTL in filter mode WHILE
- * http://www.example.com/soap/ - is mapped to a Axis web service servlet
+ * htt&#58;://www.example.com/FusionVTL/book/list - "FusionVTL" is the servlet mapping trigger. In this came "$home" would be "http://www.example.com/FusionVTL" OR
+ * htt&#58;://www.example.com/book/list - is picked up and handled by FusionVTL in filter mode WHILE
+ * htt&#58;://www.example.com/soap/ - is mapped to a Axis web service servlet
 
 
 ### FusionVTL Built in Directives
@@ -269,10 +272,10 @@ any Velocity code is valid inside of the tag.  This is useful for constructing c
 \#save('repeat')
   Hello World
 #end
-```
-\$repeat
-\$repeat
-\$repeat
+
+$repeat
+$repeat
+$repeat
 ```
 
 \#save('sql')
