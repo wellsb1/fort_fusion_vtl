@@ -74,7 +74,7 @@ At its most basic level FusionVTL does three things:
    request. This is where you put the the beans that will allow you to connect to your application business logic as well 
    as misc UI layer helpers.
  * WEB-INF/VM_global_library.vm - OPTIONAL - VM file loaded once by the framework that contains helpful macro definitions. Define useful
-   velocity "subroutines" here and they will be in scope on each request. See [Velocimacro doco]http://velocity.apache.org/engine/2.0/vtl-reference.html) 
+   velocity "subroutines" here and they will be in scope on each request. See [Velocimacro doco](http://velocity.apache.org/engine/2.0/vtl-reference.html) 
    for more info.
 
 
@@ -94,7 +94,7 @@ This can cause chaos without simple patters to follow. FusionVTL interprets a UR
 
 
 ```
-{http://example.org/[servlet_context]}/${component}/[${action}]/[{[name]/[value]/...[name]/[value]}]?[standard query string]
+http://host/[servlet_context]}/${component}/[${action}]/[name]/[value]/...[name]/[value]]?[query string]
 ```
 
  * {htt&#58;://example.org/[servlet_context]} - The first grouping is the host, port, and servlet context. This URL is stored in the 
@@ -278,14 +278,14 @@ $repeat
 $repeat
 ```
 
-\#save('sql')
- SELECT * FROM 'customer' where fname = $first_name
-\#end
-\#set($rows = $dao.execute($sql))
+#save('sql')
+ SELECT * FROM 'customer' where fname = $firstName
+#end
+#set($rows = $dao.execute($sql))
 
-\#save('saveVar')
-   \#parse("../widgits/selectList.vm")
-\#end
+#save('saveVar')
+   #parse("../widgits/selectList.vm")
+#end
 
 
 #### Layout
