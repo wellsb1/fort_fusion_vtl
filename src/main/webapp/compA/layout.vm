@@ -1,0 +1,4 @@
+compA/layout.vm
+<table border="1"><tr><td>$content</td></table>
+
+

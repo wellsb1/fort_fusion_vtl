@@ -1,0 +1,18 @@
+
+\${home} = ${home}
+
+<br><a href="${home}">home</a>
+<br><a href="${home}/pagea">pagea</a>
+<br><a href="${home}/pageA">pageA</a>
+
+<br><a href="${home}/compa">compa</a>
+
+<br><a href="${home}/compb/action1">compb/action1</a>
+
+<br><a href="${home}/compc/action1">compc/action1</a>
+<br><a href="${home}/compc/action2">compc/action2</a>
+<br><a href="${home}/compc/action3">compc/action3</a>
+
+
+<br><a href="${home}/alpha">alpha</a>
+<br><a href="${home}/beta/page1">beta/page1</a>

@@ -1,0 +1,11 @@
+
+
+somelayout.vm wrapper
+<table border=1>
+<tr>
+	<td>
+		$content
+	</td>
+</tr>
+</table>
+	

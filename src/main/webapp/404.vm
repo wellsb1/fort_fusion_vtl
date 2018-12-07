@@ -1,0 +1,4 @@
+Edit 404.vm to create custom 404 pages.
+<p>
+When PieVm is run as a filter, an unfound template simply allows the filter chain to proceede.  
+That means that 404.vm does not apply when running in as a filter.

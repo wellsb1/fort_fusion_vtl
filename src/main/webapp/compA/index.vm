@@ -1,0 +1,9 @@
+#save('savedcontent')
+ saved content
+#end
+
+whats up $savedcontent?
+
+#layout('/compA/somelayout.vm')
+	custom nested layout content
+#end

@@ -1,0 +1,22 @@
+This file will be called in the event of a 500 error so you can return pretty error messages
+<p>
+
+#if($sql)
+<pre>
+$!tool.escapeForHtml($sql)
+</pre><br><br><br>
+#end
+
+
+#if($content)
+<pre>
+$!tool.escapeForHtml($content)
+</pre><br><br><br>
+#end
+
+<pre>
+$stackTrace
+</pre>
+
+<table>
+

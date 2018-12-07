@@ -1,0 +1,5 @@
+## Put server wide global vars here, any output
+## will not be written to requesting clients.
+##
+## Unless the servlet is in devMode this will 
+## only be evaluated once per servlet instance.

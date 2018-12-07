@@ -1,0 +1,23 @@
+
+#macro( render $path $request $response $vmcontext )
+$vmservlet.render($path, $request, $response, $vmcontext)
+#end
+
+
+### This will do a 302 Moved Temporarily
+#macro( redirect $loc )
+	#if(!$redirectLocation)
+		#set($redirectLocation = $loc)
+		$response.sendRedirect($loc)
+	#end		
+#end
+
+### This will do a 301 Moved Permanently
+#macro( permRedirect $loc)
+	#if(!$redirectLocation)
+		#set($redirectLocation = $loc)		   
+		$response.setStatus(301);
+		$response.setHeader( "Location", "$loc" );
+		$response.setHeader( "Connection", "close" );
+	#end		
+#end
